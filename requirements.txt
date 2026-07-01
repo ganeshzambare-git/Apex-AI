@@ -1,0 +1,15 @@
+fastapi==0.110.0
+uvicorn==0.27.1
+streamlit==1.32.2
+ollama==0.1.7
+langchain==0.1.13
+langgraph==0.0.30
+chromadb==0.4.24
+sentence-transformers==2.6.1
+pydantic==2.6.4
+pandas==2.2.1
+numpy==1.26.4
+sqlalchemy==2.0.28
+pytest==8.1.1
+python-dotenv==1.0.1
+tiktoken==0.6.0
