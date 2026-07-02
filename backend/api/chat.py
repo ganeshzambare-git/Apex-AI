@@ -11,6 +11,11 @@ class ChatRequest(BaseModel):
     conversation_id: Optional[str] = None
     response_mode: Optional[str] = "MODE_BUSINESS"
 
+class SectorCommandRequest(BaseModel):
+    query: str
+    sector: str
+    conversation_id: Optional[str] = None
+
 # Mock function to simulate token verification and extracting tenant context
 async def get_tenant_id(authorization: str = Header(default="Bearer mock-token")):
     return "mock-tenant-uuid"
@@ -34,3 +39,24 @@ async def chat_completion(
         "confidence": result["confidence"],
         "visualization_payload": None # Could be populated with ECharts data
     }
+
+@router.post("/sector-command")
+async def sector_command(
+    request: SectorCommandRequest,
+    tenant_id: str = Depends(get_tenant_id)
+):
+    """
+    Endpoint for Sector Command Intelligence System.
+    Fetches context and returns a structured JSON response.
+    """
+    # Assuming 'username' is extracted from the token in a real scenario
+    user_id = "mock-user-id"
+    
+    result = agent_orchestrator.route_sector_command(
+        user_query=request.query,
+        sector=request.sector,
+        tenant_id=tenant_id,
+        user_id=user_id
+    )
+    
+    return result

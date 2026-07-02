@@ -34,3 +34,38 @@ class AuditLogger:
             print(f"SECURITY AUDIT: Logged Level {severity_level} violation for tenant {tenant_id}.")
         except Exception as e:
             print(f"SECURITY AUDIT ERROR: Failed to write to audit log: {str(e)}")
+
+    def log_execution(self, user_id: str, tenant_id: str, sector: str, command: str, apis_called: list, prompt_used: str, confidence: float, latency: float, charts_generated: int):
+        """
+        Logs successful execution of an intelligence command for audit and telemetry purposes.
+        """
+        entry = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "user_id": user_id,
+            "tenant_id": tenant_id,
+            "sector": sector,
+            "command": command,
+            "apis_called": apis_called,
+            "prompt_used": prompt_used,
+            "confidence": confidence,
+            "latency_sec": latency,
+            "charts_generated": charts_generated,
+            "action_taken": "EXECUTED"
+        }
+        
+        # Append to log file
+        try:
+            logs = []
+            if os.path.exists(self.log_path):
+                with open(self.log_path, "r") as f:
+                    logs = json.load(f)
+            
+            logs.append(entry)
+            
+            with open(self.log_path, "w") as f:
+                json.dump(logs, f, indent=2)
+                
+            print(f"EXECUTION AUDIT: Logged successful command for tenant {tenant_id}.")
+        except Exception as e:
+            print(f"EXECUTION AUDIT ERROR: Failed to write to audit log: {str(e)}")
+

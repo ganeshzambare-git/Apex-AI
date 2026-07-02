@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.upload import router as upload_router
 from api.dashboard import router as dashboard_router
 from api.chat import router as chat_router
+from api.datasets import router as datasets_router
 from api.middleware import ApexSecurityMiddleware
 
 app = FastAPI(title="Apex AI Enterprise Backend", version="1.0.0")
@@ -19,6 +20,7 @@ app.add_middleware(
 )
 
 app.include_router(upload_router, prefix="/api/v1/ingest")
+app.include_router(datasets_router, prefix="/api/v1/datasets")
 app.include_router(dashboard_router, prefix="/api/v1/analytics")
 app.include_router(chat_router, prefix="/api/v1/chat")
 

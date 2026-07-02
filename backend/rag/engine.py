@@ -1,5 +1,5 @@
 import chromadb
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 class RAGEngine:
     def __init__(self, db_dir="../vector_db"):
